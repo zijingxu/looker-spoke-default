@@ -19,7 +19,6 @@ explore: funnel_analysis {
   join: client_properties {
     relationship: one_to_one
     type: left_outer
-    sql_where: {% condition funnel_analysis.date %} CAST(client_properties.submission_date AS TIMESTAMP) {% endcondition %};;
     sql_on: ${funnel_analysis.sample_id} = ${client_properties.sample_id}
         AND ${funnel_analysis.client_id} = ${client_properties.client_id}
         AND ${funnel_analysis.submission_date} = ${client_properties.submission_date};;
@@ -226,4 +225,11 @@ explore: event_property_display {
   hidden: yes
   from: raw_event_types
   sql_always_where: property_name = 'display';;
+}
+
+explore: client_properties {
+  hidden: yes
+  from: client_properties
+  fields: [is_default_browser, fraction_is_default_browser, count_is_default_browser, submission_date]
+  sql_always_where: {% condition funnel_analysis.date %} CAST(client_properties.submission_date AS TIMESTAMP) {% endcondition %} ;;
 }
