@@ -3,7 +3,7 @@ include: "//looker-hub/firefox_desktop/views/clients_last_seen.view.lkml"
 view: client_properties {
   extends: [clients_last_seen]
 
-  filter: days_diff {
+  parameter: days_diff {
     type: number
     default_value: "0"
   }
