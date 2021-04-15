@@ -22,7 +22,7 @@ explore: funnel_analysis {
     sql_where: client_properties.submission_date BETWEEN DATE({% date_start funnel_analysis.date %}) AND DATE({% date_end funnel_analysis.date %});;
     sql_on: ${funnel_analysis.sample_id} = ${client_properties.sample_id}
         AND ${funnel_analysis.client_id} = ${client_properties.client_id}
-        AND ${funnel_analysis.submission_date} = ${client_properties.submission_date};;
+        AND ${funnel_analysis.submission_date} = DATE_ADD(${client_properties.submission_date}, ${client_properties.days_diff});;
   }
   join: event_type_1 {
     relationship: many_to_one
