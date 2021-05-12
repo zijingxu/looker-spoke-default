@@ -29,7 +29,7 @@
       fields: [desktop_session.date_date, desktop_session.total_non_fx_downloads, desktop_session.total_non_fx_sessions,
         country_buckets.bucket]
       sorts: [desktop_session.date_date desc]
-      limit: 500
+      limit: 100
       join_fields:
       - field_name: desktop_session.date_date
         source_field_name: desktop_install.submission_date
