@@ -215,7 +215,7 @@ view: prediction {
       avg(new_profiles_forecast_upper) over window_7day as new_profiles_forecast_upper_7day_ma
     FROM
       mozdata.analysis.dou_forecasts
-    WHERE -- Also requires ${insert_stmnt.SQL_TABLE_NAME}
+    WHERE
       key = ARRAY_TO_STRING(REGEXP_EXTRACT_ALL("""
       {% condition firefox_desktop_usage_2021.activity_segment %} activity_segment {% endcondition %}
       {% condition firefox_desktop_usage_2021.campaign %} campaign {% endcondition %}
@@ -268,9 +268,9 @@ view: prediction {
   }
 
   measure: dau_forecast {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_forecast) ;;
+    sql: ${TABLE}.dau_forecast ;;
     description: "Forecasted value for Daily Active Users. Only relevant for 2021."
   }
 
@@ -312,9 +312,9 @@ view: prediction {
   }
 
   measure: dau_target {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_target) ;;
+    sql: ${TABLE}.dau_target ;;
     description: "Targeted value for Daily Active Users. Only relevant for 2021."
   }
 
@@ -385,7 +385,7 @@ view: prediction {
 
   measure: recent_cum_new_profiles_forecast {
     type: max
-    value_format: "#,##0"
+    value_format: "0.000,, \"Million\""
     sql: ${TABLE}.cum_new_profiles_forecast ;;
     filters: [
       date: "after 2021-01-01"
@@ -395,7 +395,7 @@ view: prediction {
 
   measure: recent_cum_new_profiles_target {
     type: max
-    value_format: "#,##0"
+    value_format: "0.00,, \"Million\""
     sql: ${TABLE}.cum_new_profiles_target ;;
     filters: [
       date: "after 2021-01-01"
@@ -405,7 +405,7 @@ view: prediction {
 
   measure: recent_cdou_forecast {
     type: max
-    value_format: "#,##0"
+    value_format: "0.00,,, \"Billion\""
     sql: ${TABLE}.cdou_forecast ;;
     filters: [
       date: "after 2021-01-01"
@@ -415,7 +415,7 @@ view: prediction {
 
   measure: recent_cdou_target {
     type: max
-    value_format: "#,##0"
+    value_format: "0.00,,, \"Billion\""
     sql: ${TABLE}.cdou_target ;;
     filters: [
       date: "after 2021-01-01"

@@ -193,14 +193,14 @@ derived_table: {
   measure: recent_new_profiles_cumulative {
     hidden: yes
     type: max
-    value_format: "#,##0"
+    value_format: "0.00,, \"Million\""
     sql: ${TABLE}.cumulative_new_profiles ;;
   }
 
   measure: recent_cdou {
     hidden: yes
     type: max
-    value_format: "#,##0"
+    value_format: "0.00,,, \"Billion\""
     sql: ${TABLE}.cdou ;;
   }
 
@@ -359,6 +359,14 @@ derived_table: {
     description: "Absolute (given as a whole number) difference between 2020's CDOU and 2021's CDOU."
   }
 
+  measure: year_over_year_cdou_delta_percent {
+    label: "Cdou: Relative Delta from 2020"
+    type: number
+    value_format: "0.000%"
+    sql: ${cdou} / ${year_over_year_cdou} - 1;;
+    description: "Absolute (given as a whole number) difference between 2020's CDOU and 2021's CDOU."
+  }
+
   measure: year_over_year_new_profiles {
     label: "2020 New Profiles"
     type: number
@@ -386,6 +394,20 @@ derived_table: {
     value_format: "#,##0"
     sql: ${new_profiles_cumulative} - ${year_over_year_new_profiles_cumulative} ;;
     description: "Absolute (given as a whole number) difference between 2020's Cumulative New Profiles and 2021's Cumulative New Profiles."
+  }
+
+  measure: recent_cdou_2020 {
+    hidden: yes
+    type: number
+    value_format: "0.00,,, \"Billion\""
+    sql: ${firefox_desktop_usage_2020.recent_cdou} ;;
+  }
+
+  measure: recent_new_profiles_2020 {
+    hidden: yes
+    type: number
+    value_format: "0.00,, \"Million\""
+    sql: ${firefox_desktop_usage_2020.recent_new_profiles_cumulative} ;;
   }
 
 }

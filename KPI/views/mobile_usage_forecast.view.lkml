@@ -137,7 +137,7 @@ view: mobile_prediction {
       avg(dau_forecast_upper) over window_7day as dau_forecast_upper_7day_ma
     FROM
       mozdata.analysis.mobile_dou_forecasts
-    WHERE -- Also requires ${mobile_insert_stmnt.SQL_TABLE_NAME}
+    WHERE
       key = ARRAY_TO_STRING(REGEXP_EXTRACT_ALL("""
       {% condition mobile_usage_2021.campaign %} campaign {% endcondition %}
       {% condition mobile_usage_2021.channel %} channel {% endcondition %}
@@ -162,78 +162,94 @@ view: mobile_prediction {
   }
 
   measure: cdou_forecast {
-    type: number
-    value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.cdou_forecast) ;;
+    type: sum
+    value_format: "0.000,,, \"Billion\""
+    sql: ${TABLE}.cdou_forecast ;;
     description: "Forecasted value for Cumulative Days of Use. Only relevant for 2021."
   }
 
   measure: cdou_target {
-    type: number
-    value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.cdou_target) ;;
+    type: sum
+    value_format: "0.000,,, \"Billion\""
+    sql: ${TABLE}.cdou_target ;;
     description: "Targeted value for Cumulative Days of Use. Only relevant for 2021."
   }
 
   measure: dau_forecast {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_forecast) ;;
+    sql: ${TABLE}.dau_forecast ;;
     description: "Forecasted value for Daily Active Users. Only relevant for 2021."
   }
 
+  measure: dau_forecast_format {
+    type: sum
+    value_format: "0.000,,, \"Billion\""
+    sql: ${TABLE}.dau_forecast ;;
+    description: "Forecasted value for Daily Active Users. Only relevant for 2021."
+    hidden: yes
+  }
+
   measure: dau_forecast_7day_ma {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_forecast_7day_ma) ;;
+    sql: ${TABLE}.dau_forecast_7day_ma ;;
     hidden: yes
   }
 
   measure: dau_target {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_target) ;;
+    sql: ${TABLE}.dau_target ;;
     description: "Targeted value for Daily Active Users. Only relevant for 2021."
   }
 
+  measure: dau_target_format {
+    type: sum
+    value_format: "0.000,,, \"Billion\""
+    sql: ${TABLE}.dau_target ;;
+    description: "Targeted value for Daily Active Users. Only relevant for 2021."
+    hidden: yes
+  }
+
   measure: dau_target_7day_ma {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_target_7day_ma) ;;
+    sql: ${TABLE}.dau_target_7day_ma ;;
     hidden: yes
   }
 
   measure: dau_forecast_lower {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_forecast_lower) ;;
+    sql: ${TABLE}.dau_forecast_lower ;;
     description: "Lower bound (10th percentile) of forecasted value for Cumulative Days of Use. Only relevant for 2021."
   }
 
   measure: dau_forecast_lower_7day_ma {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_forecast_lower_7day_ma) ;;
+    sql: ${TABLE}.dau_forecast_lower_7day_ma ;;
     hidden: yes
   }
 
   measure: dau_forecast_upper {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_forecast_upper) ;;
+    sql: ${TABLE}.dau_forecast_upper ;;
     description: "Upper bound (90th percentile) of forecasted value for Cumulative Days of Use. Only relevant for 2021."
   }
 
   measure: dau_forecast_upper_7day_ma {
-    type: number
+    type: sum
     value_format: "#,##0"
-    sql: ANY_VALUE(${TABLE}.dau_forecast_upper_7day_ma) ;;
+    sql: ${TABLE}.dau_forecast_upper_7day_ma ;;
     hidden: yes
   }
 
   measure: recent_cdou_forecast {
     type: max
-    value_format: "#,##0"
+    value_format: "0.000,,, \"Billion\""
     sql: ${TABLE}.cdou_forecast ;;
     filters: [
       date: "after 2021-01-01"
@@ -243,7 +259,7 @@ view: mobile_prediction {
 
   measure: recent_cdou_target {
     type: max
-    value_format: "#,##0"
+    value_format: "0.000,,, \"Billion\""
     sql: ${TABLE}.cdou_target ;;
     filters: [
       date: "after 2021-01-01"

@@ -127,7 +127,7 @@ view: mobile_usage_2021 {
 
   measure: cdou {
     type: sum
-    value_format: "#,##0"
+    value_format: "0.00,,, \"Billion\""
     sql: ${TABLE}.cdou ;;
     description: "Cumulative Days of Use, in that calendar year."
   }
@@ -170,7 +170,7 @@ view: mobile_usage_2021 {
 
   measure: recent_cdou {
     type: max
-    value_format: "#,##0"
+    value_format: "0.00,,, \"Billion\""
     sql: ${TABLE}.cdou ;;
     hidden: yes
   }
@@ -190,9 +190,17 @@ view: mobile_usage_2021 {
 
   measure: delta_from_forecast {
     type: number
-    value_format: "0.000%"
+    value_format: "0.00%"
     sql: (${recent_cdou} / ${mobile_prediction.recent_cdou_forecast} ) - 1 ;;
     description: "Relative (given as a fraction) difference between actual CDOU and forecasted CDOU."
+  }
+
+  measure: delta_from_forecast_daily {
+    type: number
+    value_format: "0.00%"
+    sql: (${dau} / ${mobile_prediction.dau_forecast} ) - 1 ;;
+    description: "Relative (given as a fraction) difference between actual CDOU and forecasted CDOU."
+    hidden: yes
   }
 
   measure: delta_from_forecast_format{
@@ -219,14 +227,22 @@ view: mobile_usage_2021 {
 
   measure: delta_from_target {
     type: number
-    value_format: "0.000%"
+    value_format: "0.00%"
     sql: (${recent_cdou} / ${mobile_prediction.recent_cdou_target} ) - 1 ;;
     description: "Relative (given as a fraction) difference between actual CDOU and targeted CDOU."
   }
 
+  measure: delta_from_target_daily {
+    type: number
+    value_format: "0.00%"
+    sql: (${dau} / ${mobile_prediction.dau_target} ) - 1 ;;
+    description: "Relative (given as a fraction) difference between actual CDOU and forecasted CDOU."
+    hidden: yes
+  }
+
   measure: delta_from_forecast_count {
     type: number
-    value_format: "#,##0"
+    value_format: "0.00,, \"Million\""
     sql: ${cdou} - ${mobile_prediction.cdou_forecast}  ;;
     description: "Absolute (given as a whole number) difference between actual CDOU and forecasted CDOU."
 
@@ -234,7 +250,7 @@ view: mobile_usage_2021 {
 
   measure: delta_from_target_count {
     type: number
-    value_format: "#,##0"
+    value_format: "0.00,, \"Million\""
     sql: ${cdou} - ${mobile_prediction.cdou_target}  ;;
     description: "Absolute (given as a whole number) difference between actual CDOU and targeted CDOU."
 
@@ -285,18 +301,26 @@ view: mobile_usage_2021 {
   }
 
   measure: year_over_year_cdou {
-    label: "2020 Cdou"
+    label: "2020 CDOU"
     type: number
     sql: ${mobile_usage_2020.cdou} ;;
     description: "Cumulative Days of Use on this day in 2020."
   }
 
   measure: year_over_year_cdou_delta_count {
-    label: "Cdou: Absolute Delta from 2020"
+    label: "CDOU: Absolute Delta from 2020"
     type: number
     value_format: "#,##0"
     sql: ${cdou} - ${year_over_year_cdou} ;;
     description: "Absolute (given as a whole number) difference between 2020's CDOU and 2021's CDOU."
+  }
+
+  measure: year_over_year_cdou_delta_percent {
+    label: "CDOU: Percent Delta from 2020"
+    type: number
+    value_format: "0.00%"
+    sql: ${dau} / ${year_over_year_dau} - 1 ;;
+    description: "Percent difference between 2020's CDOU and 2021's CDOU."
   }
 
   measure: year_over_year_new_profiles {
