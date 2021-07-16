@@ -4,7 +4,13 @@ include: "views/*.view.lkml"                # include all views in the views/ fo
 # include: "dashboards/*.dashboard"
 
 explore: firefox_desktop_last_seen {
-  label: "Firefox Dekstop Clients Last Seen"
-  from: clients_last_seen
-  hidden: yes
+  label: "Firefox Desktop Clients Last Seen"
+  from: client_counts
+  hidden: no
+}
+
+explore: firefox_desktop_cohorts {
+  label: "Firefox Desktop Cohorts"
+  from: cohorts
+  hidden: no
 }
