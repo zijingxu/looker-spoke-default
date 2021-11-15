@@ -1,10 +1,10 @@
-- dashboard: mobile_mr2_ios_product_dashboard_
-  title: 'Mobile MR2 iOS Product Dashboard '
+- dashboard: mobile_mr2_ios_product_dashboard
+  title: Mobile MR2 iOS Product Dashboard
   layout: newspaper
   preferred_viewer: dashboards-next
   elements:
-  - title: Home Button Counts
-    name: Home Button Counts
+  - title: Home View Counts
+    name: Home View Counts
     model: firefox_ios
     explore: metrics
     type: looker_line
@@ -45,10 +45,15 @@
               Home Page Open From Menu Home Button}], showLabels: true, showValues: true,
         unpinAxis: true, tickDensity: default, tickDensityCustom: 5, type: linear}]
     defaults_version: 1
-    row: 12
+    note_state: expanded
+    note_display: above
+    note_text: Counts for the various ways the home page can be viewed on the iOS
+      app. None of these are new additions for MR2 so we don't expect major increases.
+    listen: {}
+    row: 19
     col: 0
     width: 13
-    height: 7
+    height: 8
   - title: Jump Back in Section Interactions
     name: Jump Back in Section Interactions
     model: firefox_ios
@@ -84,16 +89,24 @@
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    show_null_points: true
+    show_null_points: false
     interpolation: linear
+    y_axes: [{label: '', orientation: left, series: [{axisId: metrics.firefox_home_page_jump_back_in_show_all,
+            id: metrics.firefox_home_page_jump_back_in_show_all, name: Firefox Home
+              Page Jump Back In Show All}, {axisId: metrics.firefox_home_page_jump_back_in_tab_opened,
+            id: metrics.firefox_home_page_jump_back_in_tab_opened, name: Firefox Home
+              Page Jump Back In Tab Opened}, {axisId: metrics.firefox_home_page_jump_back_in_group_opened,
+            id: metrics.firefox_home_page_jump_back_in_group_opened, name: Firefox
+              Home Page Jump Back In Group Opened}], showLabels: true, showValues: true,
+        unpinAxis: true, tickDensity: default, tickDensityCustom: 5, type: linear}]
     defaults_version: 1
-    note_state: collapsed
+    note_state: expanded
     note_display: above
     note_text: Measurement of interactions with 3 primary areas of the Jump back in
       section - opening a tab, opening a group, and clicking the "show all" button
       of this section.
     listen: {}
-    row: 26
+    row: 41
     col: 13
     width: 11
     height: 8
@@ -144,7 +157,7 @@
     note_text: Measurement of how often the Jump back in section is viewed on the
       various platforms.
     listen: {}
-    row: 26
+    row: 41
     col: 0
     width: 13
     height: 8
@@ -202,7 +215,7 @@
     note_state: expanded
     note_display: above
     note_text: The metric a user chooses as their home page setting
-    row: 19
+    row: 27
     col: 0
     width: 24
     height: 7
@@ -302,7 +315,7 @@
     note_display: above
     note_text: Counts for when a user sees the Pocket section of Firefox Home.
     listen: {}
-    row: 34
+    row: 49
     col: 0
     width: 13
     height: 8
@@ -398,8 +411,25 @@
     label_density: 25
     x_axis_scale: auto
     y_axis_combined: true
-    show_null_points: true
+    show_null_points: false
     interpolation: linear
+    y_axes: [{label: '', orientation: left, series: [{axisId: baseline.clients, id: 30.0
+              - baseline.clients, name: '30.0'}, {axisId: baseline.clients, id: 31.0
+              - baseline.clients, name: '31.0'}, {axisId: baseline.clients, id: 32.0
+              - baseline.clients, name: '32.0'}, {axisId: baseline.clients, id: 32.1
+              - baseline.clients, name: '32.1'}, {axisId: baseline.clients, id: 33.0
+              - baseline.clients, name: '33.0'}, {axisId: baseline.clients, id: 33.1
+              - baseline.clients, name: '33.1'}, {axisId: baseline.clients, id: 34.0
+              - baseline.clients, name: '34.0'}, {axisId: baseline.clients, id: 34.1
+              - baseline.clients, name: '34.1'}, {axisId: baseline.clients, id: 34.2
+              - baseline.clients, name: '34.2'}, {axisId: baseline.clients, id: 35.0
+              - baseline.clients, name: '35.0'}, {axisId: baseline.clients, id: 36.0
+              - baseline.clients, name: '36.0'}, {axisId: baseline.clients, id: 37.0
+              - baseline.clients, name: '37.0'}, {axisId: baseline.clients, id: 38.0
+              - baseline.clients, name: '38.0'}, {axisId: baseline.clients, id: 38.1
+              - baseline.clients, name: '38.1'}, {axisId: baseline.clients, id: 39.0
+              - baseline.clients, name: '39.0'}], showLabels: true, showValues: true,
+        unpinAxis: true, tickDensity: default, tickDensityCustom: 5, type: linear}]
     defaults_version: 1
     listen: {}
     row: 4
@@ -487,21 +517,23 @@
     note_display: above
     note_text: Counts for when a user opens Pocket article from Firefox Home Pocket
       feed. The label is position of tile (i.e. 0, 1, 2).
-    row: 42
+    row: 57
     col: 0
     width: 24
     height: 8
-  - title: Home Button Counts BY DEVICE
-    name: Home Button Counts BY DEVICE
+  - title: Home View Counts BY DEVICE
+    name: Home View Counts BY DEVICE
     model: firefox_ios
     explore: metrics
     type: looker_line
     fields: [metrics.firefox_home_page_open_from_menu_home_button, metrics.submission_date,
-      metrics.app_menu_home, metrics.firefox_home_page_open_from_awesomebar]
+      metrics.app_menu_home, metrics.firefox_home_page_open_from_awesomebar, client_info_device_model_groups]
+    pivots: [client_info_device_model_groups]
+    fill_fields: [metrics.submission_date]
     filters:
       metrics.channel: mozdata.firefox^_ios.metrics
       metrics.submission_date: 28 days
-    sorts: [metrics.submission_date desc]
+    sorts: [metrics.submission_date desc, client_info_device_model_groups]
     limit: 500
     dynamic_fields: [{category: dimension, description: '', label: Client Info Device
           Model Groups, value_format: !!null '', value_format_name: !!null '', calculation_type: group_by,
@@ -538,6 +570,7 @@
             id: metrics.firefox_home_page_open_from_menu_home_button, name: Firefox
               Home Page Open From Menu Home Button}], showLabels: true, showValues: true,
         unpinAxis: true, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    hide_legend: false
     defaults_version: 1
     note_state: expanded
     note_display: above
@@ -545,21 +578,22 @@
       the legend to examine certain ones closer. This is the same graph as Home Button
       Counts but with the counts split out by either iPad/iPhone/iPod/Other.
     listen: {}
-    row: 12
+    row: 19
     col: 13
     width: 11
-    height: 7
+    height: 8
   - title: Pocket Section Impressions BY DEVICE
     name: Pocket Section Impressions BY DEVICE
     model: firefox_ios
     explore: metrics
     type: looker_line
-    fields: [metrics.pocket_section_impressions, metrics.submission_date]
+    fields: [metrics.pocket_section_impressions, metrics.submission_date, client_info_device_model_groups_1]
+    pivots: [client_info_device_model_groups_1]
     fill_fields: [metrics.submission_date]
     filters:
       metrics.channel: mozdata.firefox^_ios.metrics
       metrics.submission_date: 28 days
-    sorts: [metrics.submission_date desc]
+    sorts: [metrics.submission_date desc, client_info_device_model_groups_1]
     limit: 500
     dynamic_fields: [{category: dimension, description: '', label: Client Info Device
           Model Groups, value_format: !!null '', value_format_name: !!null '', calculation_type: group_by,
@@ -567,7 +601,13 @@
           [!ruby/hash:ActiveSupport::HashWithIndifferentAccess {label: iPhone, filter: "%iPhone%"},
             !ruby/hash:ActiveSupport::HashWithIndifferentAccess {label: iPad, filter: "%iPad%"},
             !ruby/hash:ActiveSupport::HashWithIndifferentAccess {label: iPod, filter: "%iPod%"}],
-          Other], _kind_hint: dimension, _type_hint: string}]
+          Other], _kind_hint: dimension, _type_hint: string}, {category: dimension,
+        description: '', label: Client Info Device Model Groups, value_format: !!null '',
+        value_format_name: !!null '', calculation_type: group_by, dimension: client_info_device_model_groups_1,
+        args: [metrics.client_info__device_model, [!ruby/hash:ActiveSupport::HashWithIndifferentAccess {
+              label: iPhone, filter: "%iPhone%"}, !ruby/hash:ActiveSupport::HashWithIndifferentAccess {
+              label: iPad, filter: "%iPad%"}, !ruby/hash:ActiveSupport::HashWithIndifferentAccess {
+              label: iPod, filter: "%iPod%"}], Other], _kind_hint: dimension, _type_hint: string}]
     x_axis_gridlines: false
     y_axis_gridlines: true
     show_view_names: false
@@ -599,10 +639,160 @@
     defaults_version: 1
     note_state: collapsed
     note_display: above
-    note_text: Eventually this graph will be split by device (debugging some issues
-      with groups currently)
+    note_text: Pocket section views by device type.
     listen: {}
-    row: 34
+    row: 49
     col: 13
     width: 11
     height: 8
+  - title: Custome Homepage Button (Client and Event Counts)
+    name: Custome Homepage Button (Client and Event Counts)
+    model: firefox_ios
+    explore: metrics
+    type: looker_line
+    fields: [metrics.submission_date, metrics.firefox_home_page_customize_homepage_button,
+      metrics.firefox_home_page_customize_homepage_button_client_count]
+    fill_fields: [metrics.submission_date]
+    filters:
+      metrics.channel: mozdata.firefox^_ios.metrics
+      metrics.submission_date: 28 days
+    sorts: [metrics.submission_date desc]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: false
+    interpolation: linear
+    y_axes: [{label: '', orientation: left, series: [{axisId: metrics.firefox_home_page_customize_homepage_button,
+            id: metrics.firefox_home_page_customize_homepage_button, name: Firefox
+              Home Page Customize Homepage Button}], showLabels: true, showValues: true,
+        unpinAxis: true, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    defaults_version: 1
+    note_state: collapsed
+    note_display: above
+    note_text: This button opens the settings menu to customize the home page (toggling
+      sections on/off, setting a custom URL, etc)
+    listen: {}
+    row: 34
+    col: 0
+    width: 24
+    height: 7
+  - title: Settings Menu - Clicks on Set as Default Browser
+    name: Settings Menu - Clicks on Set as Default Browser
+    model: firefox_ios
+    explore: metrics
+    type: looker_line
+    fields: [metrics.submission_date, metrics.settings_menu_set_as_default_browser_pressed,
+      metrics.settings_menu_set_as_default_browser_pressed_client_count]
+    fill_fields: [metrics.submission_date]
+    filters:
+      metrics.channel: mozdata.firefox^_ios.metrics
+      metrics.submission_date: 28 days
+    sorts: [metrics.submission_date desc]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: false
+    interpolation: linear
+    y_axes: [{label: '', orientation: left, series: [{axisId: metrics.firefox_home_page_customize_homepage_button,
+            id: metrics.firefox_home_page_customize_homepage_button, name: Firefox
+              Home Page Customize Homepage Button}], showLabels: true, showValues: true,
+        unpinAxis: true, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    defaults_version: 1
+    note_state: expanded
+    note_display: above
+    note_text: Counts the number of times setting as default browser menu option is
+      tapped (and how many clients are tapping).
+    listen: {}
+    row: 12
+    col: 13
+    width: 11
+    height: 7
+  - title: App Foreground Count
+    name: App Foreground Count
+    model: firefox_ios
+    explore: metrics
+    type: looker_line
+    fields: [metrics.submission_date, metrics.glean_validation_foreground_count]
+    fill_fields: [metrics.submission_date]
+    filters:
+      metrics.channel: mozdata.firefox^_ios.metrics
+      metrics.submission_date: 28 days
+    sorts: [metrics.submission_date desc]
+    limit: 500
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: false
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    y_axis_scale_mode: linear
+    x_axis_reversed: false
+    y_axis_reversed: false
+    plot_size_by_field: false
+    trellis: ''
+    stacking: ''
+    limit_displayed_rows: false
+    legend_position: center
+    point_style: none
+    show_value_labels: false
+    label_density: 25
+    x_axis_scale: auto
+    y_axis_combined: true
+    show_null_points: false
+    interpolation: linear
+    y_axes: [{label: '', orientation: left, series: [{axisId: metrics.firefox_home_page_customize_homepage_button,
+            id: metrics.firefox_home_page_customize_homepage_button, name: Firefox
+              Home Page Customize Homepage Button}], showLabels: true, showValues: true,
+        unpinAxis: true, tickDensity: default, tickDensityCustom: 5, type: linear}]
+    defaults_version: 1
+    note_state: expanded
+    note_display: above
+    note_text: The number of times the app was brought to foreground.
+    listen: {}
+    row: 12
+    col: 0
+    width: 13
+    height: 7
