@@ -3,6 +3,7 @@ connection: "telemetry"
 include: "//looker-hub/firefox_desktop/views/*.view.lkml"
 include: "//looker-hub/firefox_desktop/explores/*.explore.lkml"
 include: "explores/*.explore.lkml"
+include: "views/*.view.lkml"
 # include: "dashboards/*.dashboard"
 
 explore: firefox_desktop_last_seen {
@@ -69,6 +70,18 @@ explore: feature_usage {
   always_filter: {
     filters: [
       feature_usage_table.submission_date: "7 days"
+    ]
+  }
+}
+
+explore: new_tab {
+  view_name: new_tab_table
+  label:  "New Tab Explore (Legacy Telemetry"
+  description: "A daily aggregation of specific new tab feature usages by 1% of Firefox desktop clients."
+
+  always_filter: {
+    filters: [
+      new_tab_table.submission_date: "7 days"
     ]
   }
 }
