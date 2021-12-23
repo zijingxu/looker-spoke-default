@@ -72,10 +72,11 @@ view: new_tab_table {
   #   sql: ${search_count_newtab} + ${search_count_urlbar_handoff} ;;  TODO: Add search_count_urlbar_handoff to feature_usage
   # }
 
-  # measure: urlbar_handoff_searches {
-  #   type: sum
-  #   sql:  ${search_count_urlbar_handoff} ;;
-  # }
+  measure: number_of_urlbar_handoff_searches {
+    type: sum
+    sql:  ${search_count_urlbar_handoff} ;;
+    hidden: no
+  }
 
   # searches by engine ???
 
