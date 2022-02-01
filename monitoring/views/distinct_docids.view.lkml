@@ -103,7 +103,7 @@ view: all_schema_errors {
                 document_type,
                 PATH,
                 sum(error_count) AS error_count
-         FROM `moz-fx-data-shared-prod`.monitoring.schema_error_counts
+         FROM `mozdata`.monitoring.schema_error_counts
          GROUP BY document_namespace,
                   document_type,
                   PATH
