@@ -5,6 +5,9 @@ include: "//looker-hub/monitoring/views/*"
 include: "views/*"
 include: "explores/*"
 include: "dashboards/*"
+include: "../shared/views/data_incidents.view.lkml"
+
+explore: data_incidents {}
 
 # todo: hide explores once dashboard has been implemented
 view: +payload_bytes_error_all {
