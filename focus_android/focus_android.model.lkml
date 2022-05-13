@@ -12,8 +12,6 @@ explore: pop_method3 {}
 
 explore: pop_method6 {}
 
-explore: pop_method7 {}
-
 explore: usage {
   always_filter: {
     filters: [
