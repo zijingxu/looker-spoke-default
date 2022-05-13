@@ -3,6 +3,17 @@ label: "Firefox Focus for Android"
 include: "//looker-hub/focus_android/explores/*"
 include: "views/*"
 
+
+explore: period_over_period_parameters {}
+
+explore: pop_method2 {}
+
+explore: pop_method3 {}
+
+explore: pop_method6 {}
+
+explore: pop_method7 {}
+
 explore: usage {
   always_filter: {
     filters: [
