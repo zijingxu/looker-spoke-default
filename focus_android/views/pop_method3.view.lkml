@@ -164,7 +164,7 @@ view: pop_method3 {
     description: "Use this as your grouping dimension when comparing periods. Aligns the previous periods onto the current period"
     label: "Current Period"
     type: time
-    sql: DATE_ADD(DAY, ${day_in_period} - 1, {% date_start current_date_range %}) ;;
+    sql: DATE_ADD(DATE({% date_start current_date_range %}), INTERVAL ${days_in_period} DAY) ;;
     view_label: "_PoP"
     timeframes: [
       date,
