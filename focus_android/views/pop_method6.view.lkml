@@ -172,7 +172,7 @@ view: pop_method6 {
     view_label: "_PoP"
     label: "Total sales period-over-period % change"
     type: number
-    sql: (1.0 * ${current_period_user_count_active_this_day / NULLIF(${previous_period_user_count_active_this_day} ,0)) - 1 ;;
+    sql: (1.0 * ${current_period_user_count_active_this_day} / NULLIF(${previous_period_user_count_active_this_day} ,0)) - 1 ;;
     value_format_name: percent_2
   }
 }

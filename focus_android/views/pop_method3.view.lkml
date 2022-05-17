@@ -19,7 +19,7 @@ view: pop_method3 {
         locale
       FROM `telemetry.nondesktop_clients_last_seen`
       WHERE product = 'Focus Android'
-      AND submission_date >= "2020-01-01";;
+      AND submission_date >= "2021-01-01";;
   }
 
 #######################################
