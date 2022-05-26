@@ -4,14 +4,14 @@ explore: desktop_install  {
   description: "New Installs and re-installation of Firefox."
   sql_always_where:
     ${submission_date} > date(2020, 7 ,1) AND
-    ${succeeded} AND
     (${silent} = FALSE OR ${silent} IS NULL) AND
     ${build_channel} = "release" AND
+    ${succeeded} AND
     DATE_DIFF(  -- Only use builds from the last month
         ${submission_date},
         SAFE.PARSE_DATE('%Y%m%d', SUBSTR(${build_id}, 0, 8)),
-        MONTH
-    ) <= 1 AND
+        WEEK
+    ) <= 6 AND
     ${attribution} IN ("chrome", "ie", "edge") AND
     DATE(${submission_date}) <= DATE_SUB(
       IF({% parameter desktop_install.previous_time_period %},
@@ -21,8 +21,8 @@ explore: desktop_install  {
           DATE({% date_end desktop_install.date %}),
           INTERVAL DATE_DIFF(DATE({% date_start desktop_install.date %}), DATE({% date_end desktop_install.date %}), DAY) DAY)),
         DATE({% date_end desktop_install.date %})),
-      -- if the most recent week is to be ignored, shift date range by 8 days
-      INTERVAL IF({% parameter desktop_install.ignore_most_recent_week %}, 8, 0) DAY)
+      -- if the most recent week is to be ignored, shift date range by 9 days
+      INTERVAL IF({% parameter desktop_install.ignore_most_recent_week %}, 9, 0) DAY)
     AND
     DATE(${submission_date}) > DATE_SUB(
       IF({% parameter desktop_install.previous_time_period %},
@@ -32,8 +32,8 @@ explore: desktop_install  {
           DATE({% date_start desktop_install.date %}),
           INTERVAL DATE_DIFF(DATE({% date_start desktop_install.date %}), DATE({% date_end desktop_install.date %}), DAY) DAY)),
         DATE({% date_start desktop_install.date %})),
-      -- if the most recent week is to be ignored, shift date range by 8 days
-      INTERVAL IF({% parameter desktop_install.ignore_most_recent_week %}, 8, 0) DAY);;
+      -- if the most recent week is to be ignored, shift date range by 9 days
+      INTERVAL IF({% parameter desktop_install.ignore_most_recent_week %}, 9, 0) DAY);;
   join: country_buckets {
     type: cross
     relationship: many_to_one

@@ -1,3 +1,4 @@
+
 view: mobile_android_country {
   derived_table: {
     sql: with last_updated as (
@@ -10,7 +11,7 @@ view: mobile_android_country {
           _LATEST_DATE,
           date_sub(current_date(), interval 7+1 day)
         ) as latest_date
-      from `moz-fx-data-marketing-prod.google_play_store.Retained_installers_country_v1`
+      from `moz-fx-data-marketing-prod.google_play_store.Installs_country_v1`
       where Date >= date_sub(current_date(), interval 28 day)
     ),
     period as (
@@ -25,20 +26,21 @@ view: mobile_android_country {
         ) as end_date
       from last_updated
     ),
-    play_store_retained as (
-          SELECT
+      play_store_performance as (
+        SELECT
           Date AS submission_date,
-          COALESCE(IF(country = "Other", null, country), "OTHER") as country,
-          SUM(Store_Listing_visitors) AS first_time_visitor_count,
-          SUM(Installers) AS first_time_installs
-          FROM
-            `moz-fx-data-marketing-prod.google_play_store.Retained_installers_country_v1`
-          CROSS JOIN
-            period
-          WHERE
-            Date between start_date and end_date
-            AND Package_name IN ('org.mozilla.{% parameter.app_id %}')
-          GROUP BY 1, 2
+          COALESCE(IF(Country_region = "Other", NULL, Country_region), "OTHER") AS country,
+            sum(Store_listing_visitors) as first_time_visitor_count,
+            sum(Store_listing_acquisitions) as first_time_installs,
+        FROM
+          `moz-fx-data-marketing-prod.google_play_store.Store_Performance_country_v1`
+        CROSS JOIN
+          period
+        WHERE
+          Date BETWEEN start_date AND end_date
+          AND Package_name IN ('org.mozilla.{% parameter.app_id %}')
+        GROUP BY
+          1, 2
       ),
       play_store_installs as (
           SELECT
@@ -59,7 +61,7 @@ view: mobile_android_country {
       -- The set of play store countries is much smaller than the entire set of countries that we may
       -- be interested in. We'll limit last seen buckets to these values.
       play_store_countries as (
-          select distinct country from play_store_retained
+          select distinct country from play_store_installs
       ),
       last_seen as (
           select
@@ -97,6 +99,7 @@ view: mobile_android_country {
           country,
           max(play_store_updated) as play_store_updated,
           max(latest_date) as latest_date,
+          -- NOTE: DS-1666 values from the defunct user acquisition tables
           sum(first_time_visitor_count) as first_time_visitor_count,
           sum(first_time_installs) as first_time_installs,
           sum(device_installs) as device_installs,
@@ -104,8 +107,8 @@ view: mobile_android_country {
           sum(event_installs) as event_installs,
           sum(first_seen) as first_seen,
           sum(activated) as activated
-      from play_store_retained
-      full join play_store_installs
+      from play_store_installs
+      full join play_store_performance
       using (submission_date, country)
       full join last_seen
       using (submission_date, country)

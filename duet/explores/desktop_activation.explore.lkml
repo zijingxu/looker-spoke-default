@@ -7,8 +7,8 @@ explore: desktop_activation {
     DATE_DIFF(  -- Only use builds from the last month
       ${submission_timestamp_date},
       SAFE.PARSE_DATE('%Y%m%d', SUBSTR(${build_id}, 0, 8)),
-      MONTH
-    ) <= 1 AND
+      WEEK
+    ) <= 6 AND
     ${os} = "Windows" AND
     ${attribution_source} IS NOT NULL AND
     ${distribution_id} IS NULL AND
@@ -21,8 +21,8 @@ explore: desktop_activation {
         DATE(DATE_ADD(
           DATE({% date_end desktop_activation.date %}), INTERVAL DATE_DIFF(DATE({% date_start desktop_activation.date %}), DATE({% date_end desktop_activation.date %}), DAY) DAY)),
           DATE({% date_end desktop_activation.date %})),
-      -- if the most recent week is to be ignored, shift date range by 8 days
-      INTERVAL IF({% parameter desktop_activation.ignore_most_recent_week %}, 8, 0) DAY)
+      -- if the most recent week is to be ignored, shift date range by 9 days
+      INTERVAL IF({% parameter desktop_activation.ignore_most_recent_week %}, 9, 0) DAY)
     AND
     DATE(${submission_timestamp_date}) > DATE_SUB(
       IF({% parameter desktop_activation.previous_time_period %},
@@ -31,8 +31,8 @@ explore: desktop_activation {
       DATE(DATE_ADD(
         DATE({% date_start desktop_activation.date %}), INTERVAL DATE_DIFF(DATE({% date_start desktop_activation.date %}), DATE({% date_end desktop_activation.date %}), DAY) DAY)),
         DATE({% date_start desktop_activation.date %})),
-      -- if the most recent week is to be ignored, shift date range by 8 days
-      INTERVAL IF({% parameter desktop_activation.ignore_most_recent_week %}, 8, 0) DAY);;
+      -- if the most recent week is to be ignored, shift date range by 9 days
+      INTERVAL IF({% parameter desktop_activation.ignore_most_recent_week %}, 9, 0) DAY);;
   join: country_buckets {
     type: cross
     relationship: many_to_one
