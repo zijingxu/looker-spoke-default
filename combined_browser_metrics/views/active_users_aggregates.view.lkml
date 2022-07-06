@@ -2,6 +2,14 @@ include: "//looker-hub/combined_browser_metrics/views/active_users_aggregates.vi
 
 view: +active_users_aggregates {
 
+  # PDT to test the improvements in queries by adding indices
+  # derived_table: {
+  #   sql: SELECT * FROM active_users_aggregates WHERE submission_date > CURRENT_DATE();;
+  #   persist_for: "8 hours"
+  #   indexes: ["submission_date", "app_name", "channel"]
+  # }
+  # End of test
+
   parameter: choose_breakdown {
     label: "Choose Grouping (Rows)"
     view_label: "Date/Period Selection"
