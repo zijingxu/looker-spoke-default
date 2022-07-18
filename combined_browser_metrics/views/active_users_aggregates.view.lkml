@@ -94,7 +94,6 @@ view: +active_users_aggregates {
           {% else %}NULL{% endif %} ;;
   }
 
-
   dimension: app_name {
     label: "Browser Name"
     type: string

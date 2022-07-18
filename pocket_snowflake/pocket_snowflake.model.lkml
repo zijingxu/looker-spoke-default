@@ -2,6 +2,7 @@ connection: "pocket-snowflake"
 label: "Pocket"
 include: "views/*"
 
+
 explore: new_tab_advertising_rates {
   description: "Pocket New Tab Advertising Rates"
 }
