@@ -25,6 +25,14 @@ view: +subscription_events_table {
           END;;
   }
 
+  dimension: coupon_code {
+    group_label: "Coupon"
+    description: "The coupon code applied to a subscription."
+    type: string
+    sql: ${TABLE}.promotion_codes[SAFE_ORDINAL(1)] ;;
+  }
+
+
   dimension: count {
     hidden: yes
   }
