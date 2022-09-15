@@ -1,4 +1,5 @@
 # Dashboards for Search and Revenue
+This page directs you to a list of all the looker dashboards that exists pertaining to search and revenue and provides a brief overview for each dashboard.
 
 | Category     | Dashboard Links | Description     |
 | :---        |    :----:   |          :----:  |
