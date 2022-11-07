@@ -3,7 +3,9 @@ include: "/shared/views/*"
 
 explore: active_users_aggregates {
   always_filter: {
-    filters: [active_users_aggregates.submission_date: "this year"]
+    filters: [active_users_aggregates.app_name: "Firefox Desktop, Fenix, Fenix BrowserStack, Firefox iOS, Firefox iOS BrowserStack,
+      Focus Android,  Focus iOS, Focus iOS BrowserStack",
+      active_users_aggregates.submission_date: "after 4 weeks ago"]
   }
 
   join: countries {
@@ -19,7 +21,7 @@ explore: active_users_aggregates {
       filters: [
         active_users_aggregates.choose_breakdown: "Month^_Day",
         active_users_aggregates.choose_comparison: "Year",
-        active_users_aggregates.submission_date: "after 2021/01/01",
+        active_users_aggregates.submission_date: "after 1 year ago",
         active_users_aggregates.ytd_only: "Yes"
       ]
     }
@@ -30,6 +32,7 @@ explore: active_users_aggregates {
       increment_offset: 1
     }
   }
+
   aggregate_table: rollup__active_users_aggregates_2022_usage {
     query: {
       dimensions: [active_users_aggregates.app_name, active_users_aggregates.submission_date]
