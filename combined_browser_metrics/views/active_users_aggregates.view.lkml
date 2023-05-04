@@ -48,6 +48,13 @@ view: +active_users_aggregates {
   }
 
   dimension: month_day {
+    type: string
+    hidden: no
+    view_label: "Date/Period Selection"
+    sql: CONCAT(${submission_month_name}, " ", ${submission_day_of_month}) ;;
+  }
+
+  dimension: day_month_abbreviation {
     type:  date
     hidden: yes
     view_label: "Date/Period Selection"
@@ -72,7 +79,7 @@ view: +active_users_aggregates {
     order_by_field: sort_by1
     sql:
           {% if choose_breakdown._parameter_value == 'Month' %} ${submission_month_num}
-          {% elsif choose_breakdown._parameter_value == 'Month_Day' %} ${month_day}
+          {% elsif choose_breakdown._parameter_value == 'Month_Day' %} ${day_month_abbreviation}
           {% elsif choose_breakdown._parameter_value == 'WOY' %} ${submission_week_of_year}
           {% elsif choose_breakdown._parameter_value == 'DOY' %} ${submission_day_of_year}
           {% elsif choose_breakdown._parameter_value == 'DOM' %} ${submission_day_of_month}
@@ -90,7 +97,7 @@ view: +active_users_aggregates {
           {% if choose_comparison._parameter_value == 'Year' %} ${submission_year}
           {% elsif choose_comparison._parameter_value == 'Month' %} ${submission_month}
           {% elsif choose_breakdown._parameter_value == 'WOY' %} ${submission_week_of_year}
-          {% elsif choose_breakdown._parameter_value == 'Month_Day' %} ${month_day}
+          {% elsif choose_breakdown._parameter_value == 'Month_Day' %} ${day_month_abbreviation}
           {% else %}NULL{% endif %} ;;
   }
 
