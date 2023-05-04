@@ -15,6 +15,7 @@ explore: active_users_aggregates {
     sql_on: ${active_users_aggregates.country} = ${countries.code} ;;
   }
 
+
   aggregate_table: rollup__active_users_aggregates_2022_usage {
     query: {
       dimensions: [active_users_aggregates.month_day, active_users_aggregates.app_name, active_users_aggregates.submission_date]
@@ -45,4 +46,6 @@ explore: active_users_aggregates {
       increment_offset: 1
     }
   }
+
+
 }
