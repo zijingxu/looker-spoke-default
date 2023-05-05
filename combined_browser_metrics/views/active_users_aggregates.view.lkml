@@ -56,7 +56,7 @@ view: +active_users_aggregates {
 
   dimension: day_month_abbreviation {
     type:  date
-    hidden: yes
+    hidden: no
     view_label: "Date/Period Selection"
     convert_tz: no
     datatype:  date
