@@ -26,3 +26,9 @@ explore: newtab_visits {
     sql: LEFT JOIN UNNEST(${newtab_visits.topsite_tile_interactions}) AS newtab_visits_table__topsite_tile_interactions ;;
   }
 }
+
+## add pocket countries
+## add pocket data
+## add unique clients
+## add unique visits
+## add default UI field
