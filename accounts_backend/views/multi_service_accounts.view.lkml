@@ -11,8 +11,9 @@ view: multi_service_accounts {
     FROM
       `mozdata.accounts_backend.accounts_events`
     WHERE metrics.string.relying_party_service IN ('sync', 'mdn-plus', 'guardian-vpn', 'fx-monitor', 'fx-private-relay', 'pocket-web', 'amo-web', 'thunderbird-addons', 'mozilla-iam', 'moz-social', 'mozilla-support', 'pontoon', 'mozilla-hubs-dev')
+    AND metrics.string.event_name in ('access_token_checked', 'access_token_created')
     GROUP BY
-      DATE(submission_timestamp), metrics.string.account_user_id_sha256
+      1, 2
     HAVING ARRAY_LENGTH(services) > 1;;
   }
 
@@ -23,7 +24,7 @@ view: multi_service_accounts {
 
   dimension_group: date {
     type:  time
-    sql:  ${TABLE}.submission_date
+    sql:  ${TABLE}.submission_date;;
     datatype: date
     convert_tz: no
     timeframes:[
@@ -32,7 +33,7 @@ view: multi_service_accounts {
       month,
       quarter,
       year
-    ];;
+    ]
   }
 
   dimension: user_id {
